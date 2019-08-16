@@ -1,0 +1,127 @@
+<div class="ui  header top attached segment " style="background:#f9fafb">
+    Victims' Profiles:
+</div>
+<div class="ui negative icon message" *ngIf="error">
+    <i class="big info circle icon"></i>
+    <div class="content">
+        <p>{{error}}</p>
+        <span style="cursor: pointer;" (click)="getCountries(countryParams.page)">click here </span> to try again.
+    </div>
+</div>
+<div class="ui attached basic fill segment no-padding">
+    <div class="ui top attached basic fill segment  ">
+        <div class="ui column grid">
+            <span>
+                <div class="ui icon mini input" [ngClass]="{'loading':pending}" style="margin:5px">
+                    <input type="text" placeholder="Search..." [formControl]="search">
+                    <i class="search icon"></i>
+                </div>
+            </span>
+            <span class="ui mini icon input" style="margin:5px">
+                <label>Display
+                    <sui-select class="selection" [ngModel]="total" style="min-width:4px" placeholder="Choose" (ngModelChange)="onDisplayRecords($event)">
+                        <sui-select-option value="2"></sui-select-option>
+                        <sui-select-option value="10"></sui-select-option>
+                        <sui-select-option value="20"></sui-select-option>
+                        <sui-select-option value="50"></sui-select-option>
+                        <sui-select-option value="100"></sui-select-option>
+                    </sui-select>
+                    Rows</label>
+            </span>
+           
+        </div>
+        <div class="ui column grid">
+            <div class="column">
+            </div>
+        </div>
+
+    </div>
+
+    <div style="width: 100%;overflow: auto;">
+        <table class="ui celled table" *ngIf="victims && victims.length > 0" style="width: 100%;margin-bottom:0 !important">
+            <thead class="bpp-table-header" style="background:#f8f8f8 !important;">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Phone Number</th>
+                    <th>Email Address</th>
+                    <th>Incident State</th>
+                    <th>Incident Lga</th>
+                    <th>Incident City</th>
+                    <th>Registered Date</th>
+                    <th>Incident Street</th>
+                    <th>Incident Type</th>
+                    <th>Incident Description</th>
+                    <th>Incident Date</th>
+                    <th>Contact Home Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let victimP of victims" class="bpp-table-data">
+                    <td>
+                            <button suiPopup popupText="view documents uploaded" [routerLink]="['/admin/dashboard-victim-photos', victimP.VictimId, victimP.FirstName,victimP.LastName, victimP.PhoneNumber]" class="ui mini basic blue icon button">
+                                    <i [routerLink]="['/admin/dashboard-victim-photos', victimP.VictimId]" class="eye icon"></i>
+                                  </button>
+                    </td>
+                    <td>
+                        <button suiPopup popupText="Edit victim profile" [routerLink]="['/admin/admin-edit-victim', victimP.VictimId,victimP.FirstName,victimP.LastName, victimP.PhoneNumber]" class="ui mini basic blue icon button">
+                          <i [routerLink]="['/admin/admin-edit-victim', victimP.VictimId]" class="pencil alternate icon"></i>
+                        </button>
+                    </td>
+                    <td>{{victimP?.FirstName}}</td>
+                    <td>{{victimP?.LastName}}</td>
+                    <td>{{victimP?.PhoneNumber}}</td>
+                    <td>{{victimP?.Email}}</td>
+
+                    <td ><span *ngIf="victimP.IncidentDate || victimP.HomeAddress">{{victimP.StateName}}</span></td>
+                    <td > <span *ngIf="victimP.IncidentDate || victimP.HomeAddress">{{victimP.LgaName}}</span></td>
+                    <td > <span *ngIf="victimP.IncidentDate || victimP.HomeAddress">{{victimP.CityName}}</span></td>
+                    <td>{{victimP?.CreatedDate | date}}</td>
+                    
+                    <td >
+                        {{victimP?.Street}}
+                    </td>
+                    <td >
+                        {{victimP?.IncidentType}}
+                    </td>
+                    <td >
+                        {{victimP?.IncidentDescription}}
+                    </td>
+                    <td >
+                        {{victimP?.IncidentDate | date}}
+                    </td>
+                    <td >
+                        {{victimP?.HomeAddress}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <bpp-no-record-found *ngIf="victims && victims.length < 1"></bpp-no-record-found>
+        <bpp-no-record-found *ngIf="!victims"></bpp-no-record-found>
+        <sui-dimmer class="inverted" [(isDimmed)]="pending" isClickable="false">
+            <div class="ui text loader">Loading</div>
+        </sui-dimmer>
+    </div>
+</div>
+
+
+<div class="ui vertical basic segment">
+    <div class="ui two column grid">
+        <div class="column middle aligned">
+            <div class="ui medium labeled button">
+                <div class="ui icon button">
+                    <i class="database icon"></i>
+                </div>
+                <a class="ui basic label">
+                    {{total}} Record(s)
+                </a>
+            </div>
+        </div>
+        <div class="column right aligned pagination menu">
+            <sui-pagination class="small" [collectionSize]="total" [pageSize]="pageSize" [maxSize]="maxSize" [page]="page" (pageChange)="nextPage($event)">
+            </sui-pagination>
+        </div>
+    </div>
+</div>

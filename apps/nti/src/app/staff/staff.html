@@ -1,0 +1,29 @@
+<sui-sidebar-container>
+    <sui-sidebar class="vertical" [isVisible]="false" #sidebar>
+        <nti-admin-sidebar-shared (click)="sidebar.close()"></nti-admin-sidebar-shared>
+    </sui-sidebar>
+    <sui-sidebar-sibling [isDimmedWhenVisible]="true">
+        <div class="full height" style="background: #d5fadd;">
+            <!-- TOP MENU -->
+            <nti-staff-menu></nti-staff-menu>
+  
+            <div class="ui vertical basic segment">
+                <div class="ui  container">
+                    <div class="ui grid">
+                    <div class="four wide computer column sixteen wide mobile four wide tablet">
+                            <nti-staff-side-menu></nti-staff-side-menu>
+                    </div>
+  
+                    <div class="twelve wide computer column sixteen wide mobile tweleve wide tablet">
+                        <router-outlet></router-outlet>
+                    </div>
+                    </div>
+                </div>
+  
+            </div>
+            <!-- FOOTER SECTION ui inverted horizontal link list -->
+            <nti-footer-shared></nti-footer-shared>
+  
+        </div>
+    </sui-sidebar-sibling>
+  </sui-sidebar-container>

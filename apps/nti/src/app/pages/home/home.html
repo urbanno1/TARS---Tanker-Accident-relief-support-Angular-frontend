@@ -1,0 +1,269 @@
+<sui-sidebar-container style="display:inherit">
+    <sui-sidebar class="vertical" [isVisible]="false" #sidebar>
+        <nti-side-bar-shared (click)="sidebar.close()"></nti-side-bar-shared>
+    </sui-sidebar>
+
+    <sui-sidebar-sibling [isDimmedWhenVisible]="false">
+        <!-- Header -->
+        <header id="header">
+            <div class="inner" style="max-width: 90%;">
+                <a href="/" style="white-space: nowrap;overflow: hidden;" id="desktop" class="ui secondary menu computer only logo">
+                    TARS -
+                    <span style="font-size: 15px; ">TANKER ACCIDENT RELIEF SUPPORT</span>
+                </a>
+                <nav id="nav">
+                    <span>
+                        Existing User ?
+                        <a style="color:red!important; margin-right: 10px; margin-left: 5px" class="button alt"  routerLinkActive="active" [routerLink]="['/login']">
+                            Login
+                        </a>
+                    </span>
+
+                    <span>
+                        A Philanthropist ?
+                        <a style="color:red!important" class="button alt" outerLinkActive="active" [routerLink]="['../donate-money']">
+                            Donate Money
+                            <i style="font-style: normal; padding-left: 5%!important;margin-right: 5%!important" class="large arrow alternate circle right outline icon"
+                                aria-hidden="true"></i>
+                        </a>
+                    </span>
+
+
+                </nav>
+            </div>
+        </header>
+        <a class="navPanelToggle">
+            <i class="bars icon" (click)="sidebar.open()" style="font-family: icons!important; cursor: pointer;font-style: inherit"></i>
+        </a>
+
+        <!-- Banner -->
+        <section id="banner" style="padding: 5em 0 10em 0">
+            <div class="inner" style="max-width: 100%">
+
+                <!-- Two -->
+                <section id="two" style="background: none!important;">
+                    <div class="inner" style="max-width: 100%;">
+                        <article>
+                            <div class="content" style="position: relative;">
+                                <h1 style="margin-top:17%">
+                                    <span style="color:red!important">TANKER ACCIDENT VICTIM ?</span>:
+                                    <span style="font-size:15px">
+                                        <br /> We are offering support relief to the victims of tanker accident.
+                                        <br /> register to be able to recieve help from support.
+                                    </span>
+                                </h1>
+                            </div>
+
+                            <div>
+                                <h1 style="margin-top:17%">
+                                    <span style="color:red!important">A Philanthropist ?</span>:
+                                </h1>
+                                <a href="#" style="color:red!important" class="button alt" [routerLink]="['../donate-money']">
+                                    Donate Money
+                                    <i style="font-style: normal; padding-left: 5%!important;margin-right: 5%!important" class="large arrow alternate circle right outline icon"
+                                        aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </article>
+                        <article class="alt">
+                            <div class="content">
+                                <div class="wrap-login100">
+                                    <div style="text-align: center" *ngIf="error">
+                                        <h4 style=" color: red!important">{{error}}</h4>
+                                    </div>
+                                    <form class="login100-form validate-form ui form" [formGroup]="registerForm" [ngClass]="{'loading':pending}">
+                                        <!-- <p style="text-align: center; color: black;margin: 0px">New User ?</p> -->
+                                        <h3 style="text-align: center; color: black;margin: 0px">
+                                            <span style="margin-right: 5px;text-transform: capitalize"> New User ?</span>Register</h3>
+                                        <span class="login100-form-title">
+                                            <i class="edit outline icon"></i>
+                                        </span>
+
+                                        <div class="wrap-input100 validate-input" [ngClass]="displayFieldCss('firstName')" style="margin-top: 5%">
+                                            <input class="input100 has-val" formControlName="firstName" placeholder="First Name" type="text">
+                                        </div>
+                                        <nti-field-error-display [displayError]="isFieldValid('firstName')" errorMsg="Enter your first name">
+                                        </nti-field-error-display>
+
+                                        <div class="wrap-input100 validate-input" [ngClass]="displayFieldCss('lastName')" style="margin-top: 5%">
+                                            <input class="input100 has-val" formControlName="lastName" placeholder="Last Name" type="text">
+                                        </div>
+                                        <nti-field-error-display [displayError]="isFieldValid('lastName')" errorMsg="Enter your last name">
+                                        </nti-field-error-display>
+
+                                        <div class="wrap-input100 validate-input" [ngClass]="displayFieldCss('phoneNumber')" style="margin-top: 5%">
+                                            <input class="input100 has-val" formControlName="phoneNumber" placeholder="Phone Number" type="number">
+                                        </div>
+                                        <nti-field-error-display [displayError]="isFieldValid('phoneNumber')" errorMsg="Enter your phone number">
+                                        </nti-field-error-display>
+
+                                        <div class="wrap-input100 validate-input" [ngClass]="displayFieldCss('email')" style="margin-top: 5%">
+                                            <input class="input100 has-val" formControlName="email" placeholder="Email" type="email">
+                                        </div>
+                                        <nti-field-error-display [displayError]="isFieldValid('email')" errorMsg="Enter your email">
+                                        </nti-field-error-display>
+
+                                        <div class="wrap-input100 validate-input" [ngClass]="displayFieldCss('password')" style="margin-top: 5%">
+                                            <input class="input100 has-val" formControlName="password" placeholder="Password" type="password">
+                                        </div>
+                                        <nti-field-error-display [displayError]="isFieldValid('password')" errorMsg="Enter a password, at least 6 characters">
+                                        </nti-field-error-display>
+
+                                        <div class="container-login100-form-btn">
+                                            <button style="width: 100%" class="login100-form-btn" (click)="submit()">
+                                                Register
+                                            </button>
+
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+            </div>
+
+        </section>
+
+        <!-- Pioneers of the organization -->
+        <section id="one">
+            <div class="inner" style="max-width: 100%!important;">
+                <header style="text-align:center; padding-top: 2em">
+                    <h2>Accident Victims...</h2>
+                </header>
+                <div style="text-align:center">
+                    <h5 style="margin:0px">Below are the Profiles of the accident victims and their stories.</h5>
+                </div>
+                <br />
+
+                <!-- Three -->
+                <section id="three" style="max-width: 100%!important;padding:0px">
+                    <div class="inner" style="max-width: 100%!important;">
+                        <article>
+                            <div class="content">
+                                <img src="./assets/images/pic01.jpg" width="100" height="100" style="margin-left:33%" />
+                                <header style="text-align:center">
+                                    <h5>Tempus Feugiat</h5>
+                                </header>
+                                <p style="text-align:justify">Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna lorem ullamcorper laoreet,
+                                    lectus arcu.</p>
+
+                            </div>
+                        </article>
+                        <article>
+                            <div class="content">
+                                <img src="./assets/images/pic01.jpg" width="100" height="100" style="margin-left:33%" />
+                                <header style="text-align:center">
+                                    <h5>Tempus Feugiat</h5>
+                                </header>
+                                <p style="text-align:justify">Ut convallis, sem sit amet interdum consectetuer, odio augue aliquam leo, nec dapibus tortor
+                                    nibh sed.</p>
+
+                            </div>
+                        </article>
+                        <article>
+                            <div class="content">
+                                <img src="./assets/images/pic01.jpg" width="100" height="100" style="margin-left:33%" />
+                                <header style="text-align:center">
+                                    <h5>Tempus Feugiat</h5>
+                                </header>
+                                <p style="text-align:justify">Suspendisse mauris. Fusce accumsan mollis eros. Pellentesque a diam sit amet mi ullamcorper
+                                    vehicula.
+                                </p>
+
+                            </div>
+                            <div style="float:right;">
+                                <ul class="actions" style="text-align:center">
+                                    <li>
+                                        <a href="/" class="button alt">View Next ></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+
+            </div>
+        </section>
+
+
+        <!--Footer -->
+        <section id="one" style="background-color: #111111;
+            color: rgba(255, 255, 255, 0.5) !important;
+            padding: 3rem 0 6rem 0;">
+            <div class="inner" style="max-width: 100%!important;">
+                <!-- Three -->
+                <section id="three" style="max-width: 100%!important;padding:0px">
+                    <div class="inner" style="max-width: 100%!important;">
+                        <article>
+                            <div class="content">
+                                <header style="text-align:center">
+                                    <h3>Tanker Accident Relief Support</h3>
+                                </header>
+                                <p>We are a group that wants to bring back the lost hope of the tanker accident victims. We
+                                    solicit for funds to help those affected in a sincere and Godly way.
+                                </p>
+                                <p>
+                                    God bless you as you donate to help.
+                                </p>
+                            </div>
+                        </article>
+                        <article>
+                            <div class="content">
+
+                                <header style="text-align:center">
+                                    <h4>Our Links</h4>
+                                </header>
+                                <ul class="alt">
+                                    <li>
+                                        <a href="#">About Us.</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Contact Us.</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">News & Media.</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </article>
+                        <article>
+                            <div class="content">
+                                <header style="text-align:center">
+                                    <h4>Social Media</h4>
+                                </header>
+                                <ul class="plain">
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon fa-twitter">&nbsp;</i>Twitter</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon fa-facebook">&nbsp;</i>Facebook</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon fa-instagram">&nbsp;</i>Instagram</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon fa-github">&nbsp;</i>Github</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <div class="copyright" style="text-align: center">
+                    ©JKK Oneware Limited - Tanker accident relief support.
+                </div>
+            </div>
+        </section>
+
+    </sui-sidebar-sibling>
+
+</sui-sidebar-container>

@@ -1,0 +1,120 @@
+<div class="ui bottom  vertical basic  segment tab active" style="margin-top: -16px;">
+
+    <div class="ui  basic fill segment sd companydes">
+      <div class="required field">
+        <select class="ui fluid dropdown myButton" [(ngModel)]="county.CountryCode" (ngModelChange)='onSelectedOption($event)'>
+          <option *ngFor="let opt of countries" [ngValue]="opt.CountryCode">{{ opt.CountryName}}</option>
+        </select>
+      </div>
+      <div *ngIf="selected" style="margin-top:8px">
+        The country selected:
+        <strong style="color: green"> {{ county2.CountryName}} </strong>
+      </div>
+    </div>
+  </div>
+  <div class="ui negative icon message" *ngIf="error">
+    <i class="big info circle icon"></i>
+    <div class="content">
+      <p>{{error}}</p>
+        <p>
+          <span style="cursor: pointer;" 
+          (click)="getCountries(countryParams.page)">click here </span> to try again.</p>
+    </div>
+  </div>
+
+
+  <div class="ui  header top attached segment " style="background:#f9fafb">
+      States:
+    </div>
+    <div class="ui attached basic fill segment no-padding">
+      <div class="ui top attached basic fill segment  ">
+        <div class="ui column grid">
+          <span>
+            <div class="ui icon mini input" [ngClass]="{'loading':pending}" style="margin:5px">
+              <input type="text" placeholder="Search..." [formControl]="search">
+              <i class="search icon"></i>
+            </div>
+          </span>
+          <span class="ui mini icon input" style="margin:5px">
+            <label>Display
+              <sui-select class="selection" [ngModel]="total" style="min-width:4px" placeholder="Choose" (ngModelChange)="onDisplayRecords($event)">
+                <sui-select-option value="2"></sui-select-option>
+                <sui-select-option value="10"></sui-select-option>
+                <sui-select-option value="20"></sui-select-option>
+                <sui-select-option value="50"></sui-select-option>
+                <sui-select-option value="100"></sui-select-option>
+              </sui-select>
+              Rows</label>
+          </span>
+          <span class="ui mini icon input" style="margin:5px;float:right;">
+             <button class="ui basic addButton button" (click)="createState()">
+                <i class="icon plus"></i>
+                Add State
+              </button> 
+          </span>
+        </div>
+        <div class="ui column grid">
+          <div class="column">
+          </div>
+        </div>
+    
+      </div>
+    
+      <div style="width: 100%;overflow: auto;">
+        <table class="ui celled table" *ngIf="states && states.length > 0" style="width: 100%;margin-bottom:0 !important">
+          <thead class="bpp-table-header" style="background:#f8f8f8 !important;">
+            <tr>
+              <th></th>
+              <th></th>
+              <th>State Code</th>
+              <th>State Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let state of states" class="bpp-table-data">
+              <td>
+                <button suiPopup popupText="Edit State " (click)="editOption.emit(state)" class="ui mini basic blue icon button">
+                  <i (click)="editOption.emit(state)" class="pencil alternate icon"></i>
+                </button>
+              </td>
+              <td>
+                <button  suiPopup popupText="Delete State " (click)="deleteOption(state)" class="ui mini basic blue icon button">
+                  <i (click)="deleteOption(state)" class="trash alternate outline icon"></i>
+                </button>
+              </td>
+              <td>
+                {{state.State_Code}}
+              </td>
+              <td>
+                {{state.State_Name}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <bpp-no-record-found *ngIf="states && states.length < 1"></bpp-no-record-found>
+        <bpp-no-record-found *ngIf="!states"></bpp-no-record-found>
+        <sui-dimmer class="inverted" [(isDimmed)]="pending" isClickable="false">
+          <div class="ui text loader">Loading</div>
+        </sui-dimmer>
+      </div>
+    </div>
+    
+    
+    <div class="ui vertical basic segment">
+      <div class="ui two column grid">
+        <div class="column middle aligned">
+          <div class="ui medium labeled button">
+            <div class="ui icon button">
+              <i class="database icon"></i>
+            </div>
+            <a class="ui basic label">
+              {{total}} Record(s)
+            </a>
+          </div>
+        </div>
+        <div class="column right aligned pagination menu">
+          <sui-pagination class="small" [collectionSize]="total" [pageSize]="pageSize" [maxSize]="maxSize" [page]="page" (pageChange)="nextPage($event)">
+          </sui-pagination>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,146 @@
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <div class="ui warning icon message">
+            <i class="big warning circle icon"></i>
+            <div class="content">
+                <h3>
+                    Only Incident Street and Home Address can be cleared by clicking on the clear Icon, to allow the user access his/her profile
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="sixteen wide column">
+
+        <div class="ui attached basic fill segment no-padding">
+            <div class="ui  header top attached segment " style="background:#f9fafb">
+                <div class="ui grid">
+                    <div class="ui eight wide column">
+                        <div class="" style="text-align:left">
+                            Update Profile
+                        </div>
+                    </div>
+                    <div class="ui eight wide column">
+                        <div class="ui right floated   button myButton" (click)="back('create')" style="padding:10px 27px;">
+                            Back to Dashboard
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui stackable grid column" style="padding-left: 30px;padding-right: 30px;padding-top:30px;white-space: nowrap;">
+                <div class="eight wide column" >
+                    <h3 style="margin-bottom: 0px">Victim's Name:
+                        <span style="font-size:18px; color: cadetblue">{{victimLast}} {{victimFirst}}</span>
+                    </h3>
+                </div>
+                <div class="eight wide column">
+                    <h3 style="margin-bottom: 0px">Victim's Phone:
+                        <span style="font-size:18px; color: cadetblue">{{victimPhone}}</span>
+                    </h3>
+                </div>
+            </div>
+           
+            <div class="ui negative icon message" *ngIf="error">
+                <i class="big info circle icon"></i>
+                <div class="content">
+                    <p>{{error}}.</p>
+                </div>
+            </div>
+            <div style="padding-left: 30px;padding-right: 30px;padding-bottom:30px;padding-top:0px" class="ui form" [formGroup]="victimForm"
+                [ngClass]="{'loading':pending}">
+
+                <div class="field required" style="margin-top: 5%">
+                    <label>State of Incident</label>
+                    <input type="text" [readonly]="true" formControlName="stateId" [(ngModel)]="victim?.State.StateName">
+                </div>
+
+                <div class="field required">
+                    <label>LGA of Incident</label>
+                    <input type="text" [readonly]="true" formControlName="lgaId" [(ngModel)]="victim?.Lga.LgaName">
+                </div>
+                <div class="field required">
+                    <label>City of Incident</label>
+                    <input type="text" [readonly]="true" formControlName="cityId" [(ngModel)]="victim?.City.CityName">
+                </div>
+
+                <div>
+
+                    <div class="field required" [ngClass]="displayFieldCss('street')">
+                        <label>Incident Street</label>
+                        <div class="ui stackable grid column">
+                            <div class="one wide middle aligned column">
+                                <button suiPopup popupText="Clear Street" (click)="ClearStreet('street')" class="ui mini basic blue icon button">
+                                    <i (click)="ClearStreet('street')" class="trash alternate outline icon"></i>
+                                </button>
+                            </div>
+                            <div class="fifteen wide column">
+                                <input type="text" [readonly]="true" formControlName="street" [(ngModel)]="victim.Victim.Street" placeholder="Enter incident street address">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field required" [ngClass]="displayFieldCss('incidentDate')">
+                        <label>Incident Date</label>
+                        <div class="ui left icon input">
+                            <i class="calendar icon"></i>
+                            <input suiDatepicker [readonly]="true" [(ngModel)]="victim.Victim.IncidentDate"
+                                [pickerUseNativeOnMobile]="false" formControlName="incidentDate" placeholder="choose the date the incident took place">
+                        </div>
+                        <nti-field-error-display [displayError]="isFieldValid('incidentDate')" errorMsg="Choose Incident date">
+                        </nti-field-error-display>
+                    </div>
+
+                    <div class="grouped fields">
+                        <label>Incident Type</label>
+                        <div class="ui stackable three column grid " [ngClass]="displayFieldCss('incidentType')">
+                            <div class="three wide column">
+                                <div class="field">
+                                    <sui-radio-button [isDisabled]="true" [(ngModel)]="victim.Victim.IncidentType" formControlName="incidentType" value="Lost of Life">Lost of Life</sui-radio-button>
+                                </div>
+                                <nti-field-error-display [displayError]="isFieldValid('incidentType')" errorMsg="Select Incident type">
+                                </nti-field-error-display>
+                            </div>
+                            <div class="three wide  column">
+                                <div class="field">
+                                    <sui-radio-button [isDisabled]="true" [(ngModel)]="victim.Victim.IncidentType" formControlName="incidentType" value="Other Properties">Other Properties</sui-radio-button>
+                                </div>
+                                <nti-field-error-display [displayError]="isFieldValid('incidentType')" errorMsg="Select Incident type">
+                                </nti-field-error-display>
+                            </div>
+                            <div class="twelve wide column">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field required" *ngIf="fieldsCollapse" [ngClass]="displayFieldCss('incidentDescription')">
+                        <label>Incident Description</label>
+                        <textarea rows="2" formControlName="incidentDescription" [(ngModel)]="victim.Victim.IncidentDescription" placeholder="Enter Incident Description"></textarea>
+                        <nti-field-error-display [displayError]="isFieldValid('incidentDescription')" errorMsg="Enter Incident description">
+                        </nti-field-error-display>
+                    </div>
+                    <div class="ui divider"></div>
+                    <div class="field required" [ngClass]="displayFieldCss('homeAddress')">
+                        <label>Home Address</label>
+                        <div class="ui stackable grid column">
+                            <div class="one wide middle aligned column">
+                                <button suiPopup popupText="Clear Home Address" (click)="ClearHome('home')" class="ui mini basic blue icon button">
+                                    <i (click)="ClearHome('home')" class="trash alternate outline icon"></i>
+                                </button>
+
+                            </div>
+                            <div class="fifteen wide column">
+                                <input type="text" [readonly]="true" formControlName="homeAddress" [(ngModel)]="victim.Victim.HomeAddress" placeholder="Enter home address">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui basic segment" style="margin-bottom:25px">
+                        <button [disabled]="victim.Victim.HomeAddress != 'NULL' && victim.Victim.Street != 'NULL'" class="ui red button left floated"
+                            type="submit" (click)="back('create')">Cancel</button>
+                        <button [disabled]="victim.Victim.HomeAddress != 'NULL' && victim.Victim.Street != 'NULL'" class="ui blue button right floated"
+                            type="submit" (click)="submit()">Save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

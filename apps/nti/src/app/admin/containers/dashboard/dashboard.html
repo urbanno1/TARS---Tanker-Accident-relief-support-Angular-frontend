@@ -1,0 +1,101 @@
+<div class="ui grid">
+        <div class="sixteen wide column" *ngIf="roleService.roleMatch(['Victim'])">
+                <div class="ui positive icon message" *ngIf="user?.PercentageProfile == 100 && user?.PercentagePhoto == 100">
+                        <i class="big info circle icon"></i>
+                        <div class="content">
+                                <h4 style="margin-bottom: 1%">
+                                        Thank your for completing your registration! 
+                                </h4>
+                                <h4 style="margin-top: 0%">
+                                      You will be contacted via SMS once the verification/validation of your claim
+                                        is completed. Thank you.
+                                </h4>
+
+                        </div>
+                </div>
+
+                <div class="ui warning icon message" *ngIf="user?.PercentageProfile < 100 || user?.PercentagePhoto < 100">
+                        <i class="big info circle icon"></i>
+                        <div class="content">
+                                <div style="margin-bottom: 1%">
+                                        <h3 style="margin-bottom: 1%">
+                                                Thank you for registering with us! 
+                                        </h3>
+                                        <h3 style="margin-top: 0%">
+                                                Kindly update your status to enable us validate your claim. Thank you!
+                                        </h3>
+                                </div>
+                        </div>
+                </div>
+
+        </div>
+        <div class="eight wide column" *ngIf="roleService.roleMatch(['Victim'])">
+                <div class="ui center aligned attached basic fill segment" style="border-left:none!important">
+                        <bpp-progress [value]="user?.PercentageProfile"></bpp-progress>
+                        <h4 class="ui header">
+                                Profile Status <br>
+                                (<span style="font-size: 12px">Rate at which your Registration Profile has been completed</span>)
+                        </h4>
+                        <div *ngIf="user?.PercentageProfile < 100" class="ui blue basic button" (click)="updateProfile()">
+                                Update Profile
+                        </div>
+                </div>
+        </div>
+        <div class="eight wide column" *ngIf="roleService.roleMatch(['Victim'])">
+                <div class="ui center aligned attached basic fill segment" style="border-left:none!important">
+                        <bpp-progress [value]="user?.PercentagePhoto"></bpp-progress>
+                        <h4 class="ui header">
+                                Proof Status <br>
+                                (<span style="font-size: 12px">Rate at which your Document Uploads have been completed</span>)
+                        </h4>
+                        <div *ngIf="user?.PercentagePhoto < 100" class="ui blue basic button" (click)="updatePhoto()">
+                                Upload Photo
+                        </div>
+                </div>
+        </div>
+
+
+        <div class="eight wide column" *ngIf="roleService.roleMatch(['Admin'])">
+                <div class="ui center aligned attached basic fill segment" style="border-left:none!important">
+                        <bpp-progress [value]="user?.PercentageGeneralPercentageProfile"></bpp-progress>
+                        <h4 class="ui header">
+                                General Profile Status <br>
+                                (<span style="font-size: 12px">Rate at which Victims' Registration Profile has been completed</span>)
+                        </h4>
+                </div>
+        </div>
+        <div class="eight wide column" *ngIf="roleService.roleMatch(['Admin'])">
+                <div class="ui center aligned attached basic fill segment" style="border-left:none!important">
+                        <bpp-progress [value]="user?.PercentageGeneralPhoto"></bpp-progress>
+                        <h4 class="ui header">
+                                General proof Status <br> 
+                                (<span style="font-size: 12px">Rate at which Victims' Document Uploads have been completed</span>)
+                        </h4>
+                </div>
+        </div>
+        <div class="eight wide column" *ngIf="roleService.roleMatch(['Admin'])">
+                <div class="ui center aligned attached basic fill segment" style="border-left:none!important">
+                        <h1 class="numberCircle">{{user?.TotalGeneralProfile}}</h1>
+                        <h4 class="ui header">
+                                Total Registered Victims
+                        </h4>
+                </div>
+        </div>
+        <div class="eight wide column" *ngIf="roleService.roleMatch(['Admin'])">
+                <div class="ui center aligned attached basic fill segment" style="border-left:none!important">
+                        <h1 class="numberCircle">{{user?.TotalGeneralPhoto}}</h1>
+                        <h4 class="ui header">
+                                Total that has(have) uploaded Document
+                        </h4>
+                </div>
+        </div>
+        <div class="eight wide column" *ngIf="roleService.roleMatch(['Admin'])">
+                <div class="ui center aligned attached basic fill segment" style="border-left:none!important">
+                        <h1 class="numberCircle">{{user?.TotalGeneralDonors}}</h1>
+                        <h4 class="ui header">
+                                Total Registered Donors
+                        </h4>
+                </div>
+        </div>
+
+</div>

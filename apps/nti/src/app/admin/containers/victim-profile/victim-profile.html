@@ -1,0 +1,272 @@
+<div class="ui grid">
+    <div class="sixteen wide column" *ngIf="user?.PercentageProfile < 100">
+        <div class="ui warning icon message" *ngIf="user?.PercentagePhoto">
+            <i class="big warning circle icon"></i>
+            <div class="content">
+                <h3>
+                    Complete your profile details for us to be able to validate your claims
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="sixteen wide column">
+
+        <div class="ui attached basic fill segment no-padding">
+
+            <div class="ui  header top attached segment " style="background:#f9fafb">
+                <div class="ui grid">
+                    <div class="ui eight wide column">
+                        <div class="" style="text-align:left">
+                            Update Profile
+                        </div>
+                    </div>
+                    <div class="ui eight wide column">
+                        <div class="ui right floated   button myButton" (click)="back('create')" style="padding:10px 27px;">
+                            Back to Dashboard
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div *ngIf="user?.PercentageProfile < 80">
+                    <div class="ui negative icon message" *ngIf="error">
+                        <i class="big info circle icon"></i>
+                        <div class="content">
+                            <p>{{error}}.</p>
+                        </div>
+                    </div>
+                    <div style="padding-left: 30px;padding-right: 30px;padding:30px" class="ui form" [formGroup]="victimForm" [ngClass]="{'loading':pending}">
+
+                        <div class="field required" style="margin-top: 5%">
+                            <label>Select State of Incident</label>
+                            <sui-select class="selection" valueField="StateId" [options]="states" (ngModelChange)="onDisplayState($event)" placeholder="Select State of Incident"
+                                formControlName="stateId" labelField="StateName" [isSearchable]="true" #stateList>
+                                <sui-select-option *ngFor="let option of stateList.filteredOptions" [value]="option">
+                                </sui-select-option>
+                            </sui-select>
+
+                        </div>
+
+                        <div class="field required" *ngIf="lgaCollapse">
+                            <label>Select LGA of Incident</label>
+                            <sui-select class="selection" valueField="LgaId" [options]="lgas" (ngModelChange)="onDisplayLGA($event)" placeholder="Select LGA of Incident"
+                                formControlName="lgaId" labelField="LgaName" [isSearchable]="true" #lgaList>
+                                <sui-select-option *ngFor="let option of lgaList.filteredOptions" [value]="option">
+                                </sui-select-option>
+                            </sui-select>
+
+                        </div>
+                        <div class="field required" *ngIf="cityCollapse" [ngClass]="displayFieldCss('cityId')">
+                            <label>Select City of Incident</label>
+                            <sui-select class="selection" valueField="CityId" [options]="cities" (ngModelChange)="onDisplayCity($event)" placeholder="Select City of Incident"
+                                formControlName="cityId" labelField="CityName" [isSearchable]="true" #cityList>
+                                <sui-select-option *ngFor="let option of cityList.filteredOptions" [value]="option">
+                                </sui-select-option>
+                            </sui-select>
+                            <nti-field-error-display [displayError]="isFieldValid('cityId')" errorMsg="Choose City">
+                            </nti-field-error-display>
+                        </div>
+
+                        <div *ngIf="fieldsCollapse">
+
+                            <div class="field required" [ngClass]="displayFieldCss('street')">
+                                <label>Incident Street</label>
+                                <input type="text" formControlName="street" placeholder="Enter incident street address">
+                                <nti-field-error-display [displayError]="isFieldValid('street')" errorMsg="Enter incident street address">
+                                </nti-field-error-display>
+                            </div>
+                            <div class="field required">
+                                <div class="ui left icon input" [ngClass]="displayFieldCss('incidentDate')">
+                                    <i class="calendar icon"></i>
+                                    <input suiDatepicker [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false" formControlName="incidentDate"
+                                        placeholder="choose the date the incident took place">
+                                </div>
+                                <nti-field-error-display [displayError]="isFieldValid('incidentDate')" errorMsg="choose the date the incident took place">
+                                </nti-field-error-display>
+                            </div>
+
+                            <div class="grouped fields">
+                                <label>Incident Type</label>
+                                <div class="ui stackable three column grid " [ngClass]="displayFieldCss('incidentType')">
+                                    <div class="three wide column">
+                                        <div class="field">
+                                            <sui-radio-button [(ngModel)]="eRadio" (click)="onDisplayTypeLife('life')" formControlName="incidentType" value="Lost of Life">Lost of Life</sui-radio-button>
+                                        </div>
+                                        <nti-field-error-display [displayError]="isFieldValid('incidentType')" errorMsg="Select Incident type">
+                                        </nti-field-error-display>
+                                    </div>
+                                    <div class="three wide  column">
+                                        <div class="field">
+                                            <sui-radio-button [(ngModel)]="eRadio" (click)="onDisplayTypeOthers('others')" formControlName="incidentType" value="Other Properties">Other Properties</sui-radio-button>
+                                        </div>
+                                        <nti-field-error-display [displayError]="isFieldValid('incidentType')" errorMsg="Select Incident type">
+                                        </nti-field-error-display>
+                                    </div>
+                                    <div class="twelve wide column">
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="field required" *ngIf="descriptionCollapse" [ngClass]="displayFieldCss('incidentDescription')">
+                                <label>Incident Description</label>
+                                <textarea rows="2" formControlName="incidentDescription" placeholder="Enter Incident Description"></textarea>
+                                <nti-field-error-display [displayError]="isFieldValid('incidentDescription')" errorMsg="Enter Incident Description">
+                                </nti-field-error-display>
+                            </div>
+                            <div class="ui divider"></div>
+                            <div class="field required" [ngClass]="displayFieldCss('homeAddress')">
+                                <label>Home Address</label>
+                                <input type="text" formControlName="homeAddress" placeholder="Enter home address">
+                                <nti-field-error-display [displayError]="isFieldValid('homeAddress')" errorMsg="Enter home address">
+                                </nti-field-error-display>
+                            </div>
+
+                            <div class="ui basic segment" style="margin-bottom:25px">
+                                <button class="ui red button left floated" type="submit" (click)="back('create')">Cancel</button>
+                                <button class="ui blue button right floated" type="submit" (click)="submit()">Save</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div *ngIf="user?.PercentageProfile >= 80">
+                    <div *ngIf="user?.PercentageProfile >= 100">
+                        <div class="ui stackable three column grid ">
+                            <div class="three wide column">
+
+                            </div>
+                            <div class="ten wide column">
+
+                                <div style="text-align: center; padding-top: 15px;padding-bottom: 15px;color:red">
+                                    <h2>OOPs! You cannot edit your profile after 100% completion.</h2>
+                                    <h4 style="color:black">Kindly contact the administrator on
+                                        <span style="font-weight: bolder">09045676567</span> to enable you effect any changes. Thank you!.</h4>
+                                </div>
+                            </div>
+                            <div class="three wide column">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui negative icon message" *ngIf="error">
+                        <i class="big info circle icon"></i>
+                        <div class="content">
+                            <p>{{error}}.</p>
+                        </div>
+                    </div>
+
+                    <div style="padding-left: 30px;padding-right: 30px;padding:30px" class="ui form" [formGroup]="victimForm" [ngClass]="{'loading':pending}">
+
+                        <div class="field required" style="margin-top: 5%">
+                            <label>Select State of Incident</label>
+                            <sui-select class="selection" [isDisabled]="user?.PercentageProfile == 100" valueField="StateId" [(ngModel)]="victim?.State.StateId"
+                                [options]="states" (ngModelChange)="onDisplayState($event)" placeholder="Select State of Incident"
+                                formControlName="stateId" labelField="StateName" [isSearchable]="true" #stateList>
+                                <sui-select-option *ngFor="let option of stateList.filteredOptions" [value]="option">
+                                </sui-select-option>
+                            </sui-select>
+                        </div>
+
+                        <div class="field required">
+                            <label>Select LGA of Incident</label>
+                            <sui-select class="selection" [isDisabled]="user?.PercentageProfile == 100" valueField="LgaId" [(ngModel)]="victim?.Lga.LgaId"
+                                [options]="lgas" (ngModelChange)="onDisplayLGA($event)" placeholder="Select LGA of Incident"
+                                formControlName="lgaId" labelField="LgaName" [isSearchable]="true" #lgaList>
+                                <sui-select-option *ngFor="let option of lgaList.filteredOptions" [value]="option">
+                                </sui-select-option>
+                            </sui-select>
+                        </div>
+                        <div class="field required">
+                            <label>Select City of Incident</label>
+                            <sui-select class="selection" [isDisabled]="user?.PercentageProfile == 100" valueField="CityId" [(ngModel)]="victim?.City.CityId"
+                                [options]="cities" (ngModelChange)="onDisplayCity($event)" placeholder="Select City of Incident"
+                                formControlName="cityId" labelField="CityName" [isSearchable]="true" #cityList>
+                                <sui-select-option *ngFor="let option of cityList.filteredOptions" [value]="option">
+                                </sui-select-option>
+                            </sui-select>
+                        </div>
+
+                        <div>
+
+                            <div class="field required" [ngClass]="displayFieldCss('street')">
+                                <label>Incident Street</label>
+                                <input type="text" [readonly]="user?.PercentageProfile == 100" formControlName="street" [(ngModel)]="victim.Victim.Street"
+                                    placeholder="Enter incident street address">
+                                <nti-field-error-display [displayError]="isFieldValid('street')" errorMsg="Enter Incident Street">
+                                </nti-field-error-display>
+                            </div>
+                            <div class="field required" [ngClass]="displayFieldCss('incidentDate')">
+                                <div class="ui left icon input">
+                                    <i class="calendar icon"></i>
+                                    <input suiDatepicker [readonly]="user?.PercentageProfile == 100" [(ngModel)]="victim.Victim.IncidentDate" [pickerMode]="mode"
+                                        [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false" formControlName="incidentDate"
+                                        placeholder="choose the date the incident took place">
+                                </div>
+                                <nti-field-error-display [displayError]="isFieldValid('incidentDate')" errorMsg="Choose Incident date">
+                                </nti-field-error-display>
+                            </div>
+
+                            <div class="grouped fields">
+                                <label>Incident Type</label>
+                                <div class="ui stackable three column grid " [ngClass]="displayFieldCss('incidentType')">
+                                    <div class="three wide column">
+                                        <div class="field">
+                                            <sui-radio-button [isDisabled]="user?.PercentageProfile == 100" [(ngModel)]="victim.Victim.IncidentType" (click)="onDisplayTypeLife('life')"
+                                                formControlName="incidentType" value="Lost of Life">Lost of Life</sui-radio-button>
+                                        </div>
+                                        <nti-field-error-display [displayError]="isFieldValid('incidentType')" errorMsg="Select Incident type">
+                                        </nti-field-error-display>
+                                    </div>
+                                    <div class="three wide  column">
+                                        <div class="field">
+                                            <sui-radio-button [isDisabled]="user?.PercentageProfile == 100" [(ngModel)]="victim.Victim.IncidentType" (click)="onDisplayTypeOthers('others')"
+                                                formControlName="incidentType" value="Other Properties">Other Properties</sui-radio-button>
+                                        </div>
+                                        <nti-field-error-display [displayError]="isFieldValid('incidentType')" errorMsg="Select Incident type">
+                                        </nti-field-error-display>
+                                    </div>
+                                    <div class="twelve wide column">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field required" *ngIf="fieldsCollapse" [ngClass]="displayFieldCss('incidentDescription')">
+                                <label>Incident Description</label>
+                                <textarea rows="2" [readonly]="user?.PercentageProfile == 100" formControlName="incidentDescription" [(ngModel)]="victim.Victim.IncidentDescription"
+                                    placeholder="Enter Incident Description"></textarea>
+                                <nti-field-error-display [displayError]="isFieldValid('incidentDescription')" errorMsg="Enter Incident description">
+                                </nti-field-error-display>
+                            </div>
+                            <div class="ui divider"></div>
+                            <div class="field required" [ngClass]="displayFieldCss('homeAddress')">
+                                <label>Home Address</label>
+                                <input type="text" [readonly]="user?.PercentageProfile == 100" formControlName="homeAddress" [(ngModel)]="victim.Victim.HomeAddress"
+                                    placeholder="Enter home address">
+                                <nti-field-error-display [displayError]="isFieldValid('homeAddress')" errorMsg="Enter home address">
+                                </nti-field-error-display>
+                            </div>
+
+                            <div class="ui basic segment" style="margin-bottom:25px">
+                                <button [disabled]="user?.PercentageProfile == 100" class="ui red button left floated" type="submit" (click)="back('create')">Cancel</button>
+                                <button [disabled]="user?.PercentageProfile == 100" class="ui blue button right floated" type="submit" (click)="submit()">Save</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+</div>

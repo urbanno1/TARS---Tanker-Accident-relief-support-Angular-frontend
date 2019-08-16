@@ -1,0 +1,117 @@
+<div class="ui grid">
+    <div class="sixteen wide column" *ngIf="user?.PercentagePhoto < 100">
+        <div class="ui positive icon message">
+            <i class="big info circle icon"></i>
+            <div class="content">
+                <h4 style="margin-bottom: 1%">
+                    Kindly update your profile with Death Certificate (if any), Police Report,
+                     Medical Report (if any), Affidavit (if any), Accident Scene 
+                </h4>
+                <h4 style="margin-bottom: 1%;margin-top: 0px">
+                    Image extensions allowed: <span style="color: black">jpg, jpeg, gif, png.</span>
+                </h4>
+                <h4 style="margin-top: 0px">
+                    Image size not more than <span style="color: black">900px by 900px</span>
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="sixteen wide column">
+
+        <div class="ui attached basic fill segment no-padding">
+
+            <div class="ui  header top attached segment " style="background:#f9fafb">
+                <div class="ui grid">
+                    <div class="ui eight wide column">
+                        <div class="" style="text-align:left">
+                            Upload Proof Documents
+                        </div>
+                    </div>
+                    <div class="ui eight wide column">
+                        <div class="ui right floated   button myButton" (click)="back('create')" style="padding:10px 27px;">
+                            Back to Dashboard
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="user?.PercentagePhoto < 100">
+                <div class="ui negative icon message" *ngIf="error">
+                    <i class="big info circle icon"></i>
+                    <div class="content" style="padding-left: 10px;padding-right: 10px">
+                        <p>{{error}}.</p>
+                    </div>
+                </div>
+
+                <form style="padding-left: 30px;padding-right: 30px;padding:30px" class="ui form" [formGroup]="victimPhotoForm" [ngClass]="{'loading':pending}">
+                    <div class="ui stackable five column grid ">
+                        <div class="column">
+                            <div class="field">
+                                <label for="file1">Death Certificate</label>
+                                <input type="file" formControlName="file" accept=".jpg,.jpeg,.png,.gif" placeholder="choose file" (change)="uploadImageChange($event, 'Certificate')">
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label>Police Report</label>
+                                <input type="file" formControlName="file" accept=".jpg,.jpeg,.png,.gif" placeholder="choose file" (change)="uploadImageChange($event, 'Police')">
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label>Affidavit</label>
+                                <input type="file" formControlName="file" accept=".jpg,.jpeg,.png,.gif" placeholder="choose file" (change)="uploadImageChange($event, 'Affidavit')">
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label>Medical Report</label>
+                                <input type="file" formControlName="file" accept=".jpg,.jpeg,.png,.gif" placeholder="choose file" (change)="uploadImageChange($event, 'Medical')">
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label>Accident Scene (
+                                    <span style="font-size: 12px">if any</span>)</label>
+                                <input type="file" formControlName="file" accept=".jpg,.jpeg,.png,.gif" placeholder="choose file" (change)="uploadImageChange($event,'Accident')">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui basic segment" style="margin-bottom:25px">
+                        <button class="ui red button left floated" type="submit" (click)="back('create')">Cancel</button>
+                        <button class="ui blue button right floated" type="submit" (click)="submit()">Save</button>
+                    </div>
+                </form>
+            </div>
+
+            <div *ngIf="user?.PercentagePhoto == 100">
+                <div class="ui stackable grid ">
+                    <div class="three wide column">
+
+                    </div>
+                    <div class="ten wide column">
+
+                        <div style="text-align: center; padding-top: 15px;padding-bottom: 15px;color:red">
+                            <h2>OOPs! You cannot manage your Document Uploads after 100% completion.</h2>
+                            <h4 style="color:black">Kindly contact the administrator on <span style="font-weight: bolder">09045676567</span> to enable you effect any changes. Thank you!.</h4>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="three wide column">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui stackable five column grid " style="padding-left: 30px;padding-right: 30px;padding:30px">
+                <div class="column" *ngFor="let photo of victimPhoto">
+                    <h3 style="text-align: center">{{photo.PhotoTitle}}</h3>
+                    <img style="cursor: pointer; background:white!important;" class="ui image logo" width="120" height="100" src="{{baseUrl}}/Victim/GetVictimPhoto/?photoUrl={{photo.PhotoUrl}}">
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

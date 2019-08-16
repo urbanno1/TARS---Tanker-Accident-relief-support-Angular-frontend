@@ -1,0 +1,10 @@
+<sui-sidebar-container style="display:inherit">
+    <sui-sidebar class="vertical" [isVisible]="false" #sidebar>
+        <nti-admin-sidebar-shared (click)="sidebar.close()"></nti-admin-sidebar-shared>
+    </sui-sidebar>
+    <sui-sidebar-sibling [isDimmedWhenVisible]="true">
+        <div class="full height" >
+            <router-outlet></router-outlet>
+        </div>
+    </sui-sidebar-sibling>
+</sui-sidebar-container>

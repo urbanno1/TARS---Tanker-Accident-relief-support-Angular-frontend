@@ -1,0 +1,312 @@
+<sui-sidebar-container style="display:inherit">
+    <sui-sidebar class="vertical" [isVisible]="false" #sidebar>
+        <nti-side-bar-shared (click)="sidebar.close()"></nti-side-bar-shared>
+    </sui-sidebar>
+
+    <sui-sidebar-sibling [isDimmedWhenVisible]="false">
+        <div id="app-home" class="full height">
+            <div class="ui vertical segment top-segment">
+                <div id="menu" class="ui container" style="background: #29f029; min-width: 100%; margin-left: 0%!important;  margin-right: 0%!important;">
+                    <div id="desktop" class="ui inverted  secondary menu computer only " style="padding-left: 5%!important;  padding-right: 5%!important; height: 30px;margin-top: -15px;">
+                        <h3 style="color:white">
+                            NTI - National Teachers' Institute
+                        </h3>
+                        <div class="right aligned item ">
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu -->
+                <div id="menu" class="ui container" style="background: #008001; min-width: 100%; margin-left: 0%!important;  margin-right: 0%!important;">
+                    <div id="mobile" class="bpp-menu-button mobile-botom mobile only ">
+                        <div class="ui big header">
+                            <i class="sidebar icon" (click)="sidebar.open()"></i>
+                            NTI
+                        </div>
+                    </div>
+
+                    <div id="desktop" class="ui inverted  secondary menu computer only " style="padding-left: 5%!important;  padding-right: 5%!important; height: 70px;margin-top: -15px;">
+                        <div class="header item bpp-logo" style="font-size: xx-large">
+                            <img style="cursor: pointer;" class="ui image logo" width="170" height="60" src="./assets/logo-NTI-updated.png">
+                        </div>
+
+                        <div class="right aligned item ">
+                            <a class="item" routerLinkActive="active" [routerLink]="['']">Home</a>
+                            <div class="ui dropdown link item" suiDropdown>
+                                <a class="item" routerLinkActive="active" style="color:white!important" class="text">Programmes</a>
+                                <i class="dropdown icon" style="color: white;"></i>
+                                <div class="menu" suiDropdownMenu>
+                                    <div class="item">How to Apply</div>
+                                    <div class="item">How to Register</div>
+                                    <div class="item">Post Graduate Diploma in Education PGDE </div>
+                                    <div class="item">Bachelors Degree Programme BDP </div>
+                                    <div class="item">Bachelors Degree Programme BDP </div>
+
+                                    <!-- <div class="item" suiDropdown>
+                                        <i class="dropdown icon"></i>
+                                        <span class="text">Clothing</span>
+                                        <div class="menu" suiDropdownMenu>
+                                            <div class="header">Mens</div>
+                                            <div class="item">Shirts</div>
+                                            <div class="item">Pants</div>
+                                            <div class="item">Jeans</div>
+                                            <div class="item">Shoes</div>
+                                            <div class="divider"></div>
+                                            <div class="header">Womens</div>
+                                            <div class="item">Dresses</div>
+                                            <div class="item">Shoes</div>
+                                            <div class="item">Bags</div>
+                                        </div>
+                                    </div> -->
+
+                                    <!-- <div class="divider"></div>
+                                    <div class="header">Order</div>
+                                    <div class="item">Status</div> -->
+                                </div>
+                            </div>
+
+                            <a class="item" routerLinkActive="active">News & Media</a>
+                            <a class="item" routerLinkActive="active">Contact Us</a>
+                            <a class="item" routerLinkActive="active">About Us</a>
+                            <a class="item" routerLinkActive="active">Search</a>
+                            <button class="ui white button" [ngClass]="{'loading':loadingScroll}" (click)="register()"> Register</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Header Section -->
+                <div id="header" class="ui vertical stripee segment">
+                    <div class="ui two column relaxed stackable grid container ">
+                        <div class="ten wide column computer only">
+
+                        </div>
+                        <div id="form" class="six wide column">
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3 class="text-uppercase">Login</h3>
+                                    <p>Login to access your Dashboard:</p>
+                                </div>
+                                <div class="form-top-right">
+                                    <i class="pencil alternate icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <div class="ui large form" [formGroup]="loginForm" [ngClass]="{'loading':pending}">
+                                        <div *ngIf="error">
+                                                {{error}}
+                                            </div>
+                                    <div class="field" style="margin-bottom:15px!important" [ngClass]="displayFieldCss('username')">
+                                        <input style="background:#9de3c0" type="text" formControlName="username" placeholder="E-mail address or matriculation number"
+                                            required>
+                                        <nti-field-error-display [displayError]="isFieldValid('username')" errorMsg="Enter your username">
+                                        </nti-field-error-display>
+                                    </div>
+                                    <div class="field" style="margin-bottom:15px!important" [ngClass]="displayFieldCss('password')">
+                                        <input style="background:#9de3c0" type="password" formControlName="password" placeholder="Password" required>
+                                        <nti-field-error-display [displayError]="isFieldValid('password')" errorMsg="Enter your password">
+                                        </nti-field-error-display>
+                                    </div>
+
+                                    <div class="ui grid two column">
+                                        <div class="ui column">
+                                        </div>
+                                        <div class="ui column" >
+                                            <button class="ui button right floated" style="color:white; min-width:100%; background: #008001" type="submit" (click)="submit()">Login</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a href="#">I forgot my password?</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background:white!important">
+                <div id="requirement" class="ui divide basic stripe segment">
+                    <div class="ui stackable grid container">
+                        <div id="contactors" class="six wide column computer only" style="text-align: justify">
+                            <h2 class="ui header black">
+                                Acquire that knowledge you have always dreamt of.
+                                <br/>
+                                <span class="underline">NTI</span> is a place to be
+                            </h2>
+                            <p> Welcome to the National Teachers’ Institute, Kaduna upgraded myNTI student portal. The Student
+                                Portal is the home for all distance learning students where they are able to plan, attend
+                                and track their education activity for both live as well as self-paced classes. With one-click,
+                                students are able to access tools, calendars and support resources.</p>
+
+                            <p> Improved survey and assessment capability provide both students and their instructors with a
+                                clear picture of progress throughout their educational journey.</p>
+
+                            <p> The student portal is built with state of the art technologies and a clean mobile friendly user
+                                interface.
+                            </p>
+
+                            <p> This upgrade comes with a host of improvements and features to aid in the learning experience.</p>
+
+                            <p> For information about the new NTI Student portal or to register for a programme, please visit:
+                            </p>
+
+                            <div class="ui large button" style="background: #008001; color:white!important" [ngClass]="{'loading':loadingScroll}" (click)="registerNow()">
+                                Apply Now
+                            </div>
+                        </div>
+
+                        <div class="ten wide column reg-guide">
+                            <sui-tabset>
+                                <div class="ui pointing secondary menu">
+                                    <a class="active item" suiTabHeader="graduate">Post Graduate Diploma</a>
+                                    <a class="item" suiTabHeader="degree">Degree Programmes</a>
+                                    <a class="item" suiTabHeader="teacher">Teacher Training Programmes</a>
+                                    <a class="item" suiTabHeader="others">Other Programmes</a>
+                                </div>
+
+                                <div class="ui active tab" suiTabContent="graduate">
+                                    <div class="ui raised segments">
+                                        <div class="ui basic segment" style="border: 1px solid rgba(35,99, 35,.2)!important">
+                                            <h3>The PGDE is affiliated to National Open University of Nigeria (NOUN)</h3>
+
+                                            <h5>The objectives of the programme are to:</h5>
+                                            <ul>
+                                                <li>
+                                                    enable students have an adequate understanding of the philosophical, psychological and sociological foundations of Education
+                                                    and their relevance to teaching and learning in schools;
+                                                </li>
+                                                <li>
+                                                    enable students acquire the requisite general and subject-specific pedagogical skills for teaching in primary and secondary
+                                                    schools;
+                                                </li>
+                                                <li>
+                                                    and provide opportunities for the development of practical skills in the school setting through a process of supervised internship/monitoring.
+                                                    <a style="cursor: pointer;" class="item">...read more</a>
+                                                </li>
+                                            </ul>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ui tab" suiTabContent="degree">
+                                    <div class="ui raised segments">
+                                        <div class="ui basic segment" style="border: 1px solid rgba(35,99, 35,.2)!important">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ui tab" suiTabContent="teacher">
+                                    <div class="ui raised segments">
+                                        <div class="ui basic segment" style="border: 1px solid rgba(35,99, 35,.2)!important">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ui tab" suiTabContent="others">
+                                    <div class="ui raised segments">
+                                        <div class="ui basic segment" style="border: 1px solid rgba(35,99, 35,.2)!important">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </sui-tabset>
+                        </div>
+                    </div>
+                </div>
+                <hr style="border: 1px solid rgba(35,99, 35,.2)!important;box-shadow: 1px 1px 1px #f6ebeb!important;">
+            </div>
+
+            <div style="background:rgb(88, 86, 86)!important">
+                <div class="ui stackable grid container four column">
+                    <div class="ui column" style="color:whitesmoke; text-align: justify">
+                        <h3 style="color:white;text-align: center">ABOUT NTI NIGERIA</h3>
+                        <p>
+                            <img style="cursor: pointer;" class="ui image logo" width="170" height="60" src="./assets/logo-NTI-updated.png">
+                        </p>
+                        <p>The National Teachers' Institute was setup to serve as a Distance Learning Educational Institution
+                            in order to provide additional means of tackling the challenges facing Teacher Education in Nigeria</p>
+                    </div>
+                    <div class="ui column" style="color:whitesmoke; text-align: justify">
+                        <h3 style="color:white;text-align: center">
+                            RECENT NEWS ANNOUNCEMENT REGARDING APPLICATION & REGISTRATION CLOSING DATE
+                        </h3>
+                        <p>
+                            June 11, 2018 Expected Start Date of Exams 27th of July 2018 May 31,
+                        </p>
+                        <p>
+                            2018 Registration Deadline. Friday, 13th of July 2018 May 31,
+                        </p>
+                        <p>
+                            2018 2017 NCE(DLS) 1st Semester Examination July 11,
+                        </p>
+                        <p>
+                            2017 Extension of Registration for The 2016/2017 Academic Session June 4,
+                        </p>
+                        <p>2017 NTI DG Stresses Institute’s Role in Education Devt. May 11, 2017</p>
+                    </div>
+                    <div class="ui column" style="color:whitesmoke; text-align: justify">
+                        <h3 style="color:white;text-align: center">
+                            OTHER LINKS
+                        </h3>
+                        <p>
+                            Email Login Privacy Policy Contact Us Terms of Use Acessibility News & Media Student Portal
+                        </p>
+                    </div>
+                    <div class="ui column" style="color:whitesmoke; text-align: justify">
+                        <h3 style="color:white;text-align: center">
+                            CONTACT US
+                        </h3>
+                        <p>
+                            Email: info@nti.edu.ng Telephone: 234-(0)62-887873, 887780, 290352 Address: KM 5 Kaduna – Zaria Express Way, Rigachikun,
+                            PMB 2191 Kaduna, Nigeria.
+                        </p>
+                    </div>
+                </div>
+
+
+
+                <hr style="border: 1px solid rgba(35,99, 35,.2)!important;box-shadow: 1px 1px 1px #f6ebeb!important;">
+                <!-- Footer -->
+                <div id="footer" class="ui vertical basic segment">
+                    <div class="ui stackable grid container">
+                        <div id="menu" class="ten wide column computer only">
+                            <div class="ui text menu footer" style="font-size: 12px!important;">
+                                <div class="header item" style="font-size: xx-large;color:white!important">
+                                    NTI
+                                </div>
+                                <a class="item" routerLinkActive="active">News & Media</a>
+                                <a class="item" routerLinkActive="active">Contact Us</a>
+                                <a class="item" routerLinkActive="active">About Us</a>
+                                <a class="item" routerLinkActive="active">Search</a>
+                            </div>
+                        </div>
+                        <div id="copyright" style="font-size: 12px!important;color:whitesmoke!important" class="right floated middle aligned four wide column computer only">
+                            @The Bureau of Public Procurement
+                        </div>
+                        <div id="menu" style="font-size: 12px!important;" class="center aligned ten wide column mobile only">
+                            <div class="ui vertical fluid text menu">
+                                <div class="header item" style="font-size: xx-large; ">
+                                    NTI
+                                </div>
+                                <a class="item" routerLinkActive="active">News & Media</a>
+                                <a class="item" routerLinkActive="active">Contact Us</a>
+                                <a class="item" routerLinkActive="active">About Us</a>
+                                <a class="item" routerLinkActive="active">Search</a>
+                            </div>
+                        </div>
+                        <div style="font-size: 12px!important;" id="copyright" class="right floated center aligned four wide column mobile only">
+                            @The Bureau of Public Procurement
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </sui-sidebar-sibling>
+</sui-sidebar-container>
+<sui-dimmer class="inverted page" [isDimmed]="loadingScroll">
+    <div class="ui text loader">please wait...</div>
+</sui-dimmer>

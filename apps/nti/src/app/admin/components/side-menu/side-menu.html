@@ -1,0 +1,53 @@
+<div id="vertical-menu" class="ui basic segment no-padding" *ngIf="roleService.roleMatch(['Victim'])">
+    <div class="ui top attached  header">Profiles</div>
+    <div class="ui secondary left aligned vertical fluid menu">
+        <a class="item" routerLinkActive="active" [routerLink]="['/admin/dashboard']">
+            Dashboard
+        </a>
+
+        <a class="item" routerLinkActive="active" [routerLink]="['/admin/victim-profile']">
+            Manage Profile
+        </a>
+        <a class="item" routerLinkActive="active" [routerLink]="['/admin/victim-photo']">
+            Upload Images(
+            <span style="font-size: 12px">necessary for proof</span>)
+        </a>
+    </div>
+</div>
+
+<div id="vertical-menu" class="ui basic segment no-padding" *ngIf="roleService.roleMatch(['Admin'])">
+    <div class="ui top attached  header">Victims</div>
+    <div class="ui secondary left aligned vertical fluid menu">
+        <a class="item" routerLinkActive="active" [routerLink]="['/admin/dashboard']">
+            Dashboard
+        </a>
+        <a class="item" routerLinkActive="active" [routerLink]="['/admin/dashboard-victim-profile']">
+            Victim Profiles
+        </a>
+    </div>
+</div>
+
+<div id="vertical-menu" class="ui basic segment no-padding" *ngIf="roleService.roleMatch(['Admin'])">
+    <div class="ui top attached  header">Donors</div>
+    <div class="ui secondary left aligned vertical fluid menu">
+        <a class="item" routerLinkActive="active" [routerLink]="['/admin/donors']">
+            Manage Donors
+        </a>
+    </div>
+</div>
+<div id="vertical-menu" class="ui basic segment no-padding" *ngIf="roleService.roleMatch(['Admin'])">
+    <div class="ui top attached  header">Activity Trails</div>
+    <div class="ui secondary left aligned vertical fluid menu">
+        <a class="item" routerLinkActive="active" [routerLink]="['/admin/audit-trail']">
+           Audit Trail
+        </a>
+    </div>
+</div>
+<div id="vertical-menu" class="ui basic segment no-padding" *ngIf="roleService.roleMatch(['Admin'])">
+    <div class="ui top attached  header">Users</div>
+    <div class="ui secondary left aligned vertical fluid menu">
+        <a class="item" routerLinkActive="active">
+            Manage Users
+        </a>
+    </div>
+</div>

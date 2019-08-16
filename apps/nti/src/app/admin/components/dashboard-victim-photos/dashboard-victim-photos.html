@@ -1,0 +1,70 @@
+<div class="ui  header top attached segment " style="background:#f9fafb">
+    <div class="ui grid">
+        <div class="ui eight wide column">
+            <div class="" style="text-align:left">
+                Victim's Uploaded Documents:
+            </div>
+        </div>
+        <div class="ui eight wide column">
+            <div class="ui right floated   button myButton" (click)="back('create')" style="padding:10px 27px;">
+                Back to Victims' Profiles
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ui negative icon message" *ngIf="error">
+    <i class="big info circle icon"></i>
+    <div class="content">
+        <p>{{error}}</p>
+        <span style="cursor: pointer;" (click)="getCountries(countryParams.page)">click here </span> to try again.
+    </div>
+</div>
+
+
+<div class="ui attached basic fill segment no-padding">
+    <div style="padding-left: 30px;padding-right: 30px;padding:30px;white-space: nowrap;">
+        <h3 style="margin-bottom: 0px">Victim's Name:
+            <span style="font-size:18px; color: cadetblue">{{victimLast}} {{victimFirst}}</span>
+        </h3>
+        <h3 style="margin-top: 0px">Victim's Phone:
+            <span style="font-size:18px; color: cadetblue">{{victimPhone}}</span>
+        </h3>
+    </div>
+    <div style="width: 100%;overflow: auto;">
+        <div class="ui stackable five column grid " style="padding-left: 30px;padding-right: 30px;padding:30px;white-space: nowrap;">
+            <div class="column" *ngFor="let photo of victimPhotos">
+                <h3 style="text-align: center">{{photo.PhotoTitle}}</h3>
+                <img style="cursor: pointer; background:white!important;" class="ui image logo" width="120" height="100" src="{{baseUrl}}/Victim/GetVictimPhoto/?photoUrl={{photo.PhotoUrl}}">
+                <h3 style="text-align: center">
+                    <button suiPopup popupText="{{photo.PhotoTitle}}" (click)="DeleteImage(photo.PhotoTitle)" class="ui mini basic blue icon button">
+                        <i (click)="DeleteImage(photo.PhotoTitle)" class="trash alternate outline icon"></i>
+                        Delete
+                    </button>
+                </h3>
+            </div>
+        </div>
+
+        <bpp-no-record-found *ngIf="victimPhotos && victimPhotos.length < 1"></bpp-no-record-found>
+        <bpp-no-record-found *ngIf="!victimPhotos"></bpp-no-record-found>
+        <sui-dimmer class="inverted" [(isDimmed)]="pending" isClickable="false">
+            <div class="ui text loader">Loading</div>
+        </sui-dimmer>
+    </div>
+</div>
+
+
+<div class="ui vertical basic segment" *ngIf="victimPhotos && victimPhotos.length < 1">
+    <div class="ui two column grid">
+        <div class="column middle aligned">
+            <div class="ui medium labeled button">
+                <div class="ui icon button">
+                    <i class="database icon"></i>
+                </div>
+                <a class="ui basic label">
+                    {{victimPhotos.length}} Record(s)
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

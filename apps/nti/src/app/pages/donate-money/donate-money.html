@@ -1,0 +1,269 @@
+<sui-sidebar-container style="display:inherit">
+    <sui-sidebar class="vertical" [isVisible]="false" #sidebar>
+        <nti-side-bar-shared (click)="sidebar.close()"></nti-side-bar-shared>
+    </sui-sidebar>
+
+    <sui-sidebar-sibling [isDimmedWhenVisible]="false">
+        <!-- Header -->
+        <header id="header">
+            <div class="inner" style="max-width: 90%;">
+                <a href="/" style="white-space: nowrap;overflow: hidden;" id="desktop" class="ui secondary menu computer only logo">
+                    TARS -
+                    <span style="font-size: 15px; ">TANKER ACCIDENT RELIEF SUPPORT</span>
+                </a>
+                <nav id="nav">
+                    <span>
+                        Existing User ?
+                        <a style="color:red!important; margin-right: 10px; margin-left: 5px" class="button alt" [routerLink]="['/login']">
+                            Login
+                        </a>
+                    </span>
+
+                    <span>
+                        New User ?
+                        <a style="color:red!important" class="button alt" [routerLink]="['/home']">
+                            Register
+                            <i style="font-style: normal; padding-left: 5%!important;margin-right: 5%!important" class="large arrow alternate circle right outline icon"
+                                aria-hidden="true"></i>
+                        </a>
+                    </span>
+
+                </nav>
+            </div>
+        </header>
+        <a class="navPanelToggle">
+            <i class="bars icon" (click)="sidebar.open()" style="font-family: icons!important; cursor: pointer;font-style: inherit"></i>
+        </a>
+
+        <!-- Banner -->
+        <section id="banner" style="padding: 5em 0 10em 0;max-width: 100%;">
+            <div class="inner" style="max-width: 100%">
+
+                <!-- Two -->
+                <section id="two" style="background: none!important;">
+                    <div class="inner" style="max-width: 100%;">
+                        <article>
+                            <div class="content" style="position: relative;" [ngClass]="{'loading':loadingScroll}">
+                                <h1 style="text-align: center" *ngIf="donors && donors.length > 0">
+                                    <span style="color:red!important">CASH DONATIONS</span>
+                                </h1>
+
+                                <div class="ui  basic fill segment sd" *ngFor="let donor of donors" style="margin-bottom: 0px;">
+                                    <div class="ui middle aligned stackable grid">
+                                        <div class="two wide column ">
+                                        </div>
+                                        <div class="seven wide column ">
+                                            <div class="content" style="float:left;padding-left:20px">
+                                                <div class="ui header" style="margin-bottom: 3px;">
+                                                    <a class="item" style="font-size: 18px;">
+                                                        {{donor?.FullName}}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="seven wide column " style="padding-bottom: 0px;">
+                                            <div class="content">
+                                                <div class="ui header">
+                                                    <div class="ui big basic label" style="float:right;margin-bottom: 8px">
+                                                        <p style="float: right;padding: 0px;margin-bottom: 0px">
+                                                            <img width="15" height="15" style="float:left"
+                                                             class="ui image logo logo-margin" src="./assets/naira.png">
+                                                            
+                                                            {{donor?.TransationAmount |number}}
+                                                        </p>
+                                                        
+                                                        <p style="float: right; padding: 0px;font-size: 12px;clear: both;margin-top: 0px">Cash Donated</p>
+                                                        <p style="float: right; padding: 0px;font-size: 12px;clear: both;margin-top: 0px;margin-bottom: 0px;margin-top: 0px">{{donor?.CreatedDate | date}}</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </article>
+                        <article class="alt">
+                            <div class="content">
+                                <div class="wrap-login100">
+                                    <div style="text-align: center" *ngIf="error">
+                                        <h4 style=" color: red!important">{{error}}</h4>
+                                    </div>
+                                    <form class="login100-form validate-form ui form" [formGroup]="donateForm" [ngClass]="{'loading':pending}">
+                                        <h3 style="text-align: center; color: black;margin: 0px">Donate for the Course</h3>
+
+                                        <span class="login100-form-title">
+                                            <i class="edit outline icon"></i>
+                                        </span>
+
+                                        <div class="wrap-input100 " [ngClass]="displayFieldCss('fullName')">
+                                            <input class="input100 " formControlName="fullName" placeholder="Enter transaction name" type="text">
+                                        </div>
+                                        <nti-field-error-display [displayError]="isFieldValid('fullName')" errorMsg="Enter transaction name">
+                                        </nti-field-error-display>
+
+                                        <div class="ui stackable two column grid">
+                                            <div class="column">
+                                                <div class="wrap-input100 " [ngClass]="displayFieldCss('phoneNumber')" style="margin-top: 5%">
+                                                    <input class="input100 " formControlName="phoneNumber" placeholder="Phone Number" type="number">
+                                                </div>
+                                                <nti-field-error-display [displayError]="isFieldValid('phoneNumber')" errorMsg="Enter your phone number">
+                                                </nti-field-error-display>
+
+                                                <div class="field required" style="margin-top: 5%" [ngClass]="displayFieldCss('bankName')">
+                                                    <sui-select class="selection" placeholder="Select Bank Name" valueField="name" formControlName="bankName" [options]="bankNames"
+                                                        labelField="name" [isSearchable]="true" #banks>
+                                                        <sui-select-option *ngFor="let option of banks.filteredOptions" [value]="option">
+                                                        </sui-select-option>
+                                                    </sui-select>
+                                                    <nti-field-error-display [displayError]="isFieldValid('bankName')" errorMsg="Choose bank name">
+                                                    </nti-field-error-display>
+                                                </div>
+                                                <div class="field required" style="margin-top: 5%" [ngClass]="displayFieldCss('donorFor')">
+                                                    <sui-select class="selection" placeholder="Donate for ?" formControlName="donorFor" valueField="name" (selectedOptionChange)="donorforChange($event)"
+                                                        [options]="donateFor" labelField="name" [isSearchable]="true" #donate>
+                                                        <sui-select-option *ngFor="let option of donate.filteredOptions" [value]="option">
+                                                        </sui-select-option>
+                                                    </sui-select>
+
+                                                    <nti-field-error-display [displayError]="isFieldValid('donorFor')" errorMsg="donating on behalf of who ?">
+                                                    </nti-field-error-display>
+                                                </div>
+                                            </div>
+                                            <div class="column">
+                                                <div class="wrap-input100 " [ngClass]="displayFieldCss('email')" style="margin-top: 5%">
+                                                    <input class="input100 " formControlName="email" placeholder="Email" type="text">
+                                                </div>
+                                                <nti-field-error-display [displayError]="isFieldValid('email')" errorMsg="Enter your email">
+                                                </nti-field-error-display>
+
+                                                <div class="wrap-input100 " [ngClass]="displayFieldCss('transationAmount')" style="margin-top: 5%">
+                                                    <input class="input100 " formControlName="transationAmount" placeholder="Transaction Amount(=N=)" type="number">
+                                                </div>
+                                                <nti-field-error-display [displayError]="isFieldValid('transationAmount')" errorMsg="Enter your transaction amount">
+                                                </nti-field-error-display>
+
+                                                <div class="wrap-input100 " [ngClass]="displayFieldCss('transactionId')" style="margin-top: 5%">
+                                                    <input class="input100 " formControlName="transactionId" placeholder="Transaction ID" type="text">
+                                                </div>
+                                                <nti-field-error-display [displayError]="isFieldValid('transactionId')" errorMsg="Enter transation Id">
+                                                </nti-field-error-display>
+                                            </div>
+                                        </div>
+                                        <div class="ui stackable one column grid" style="margin-top: 0px">
+                                            <div class="column" *ngIf="donorForChange">
+                                                <div class="wrap-input100">
+                                                    <input class="input100" formControlName="donatingFor" placeholder="Enter the person you are donating on behalf" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="column">
+                                                <div class="field required">
+                                                    <div class="ui left icon input" [ngClass]="displayFieldCss('transactionDate')">
+                                                        <i class="calendar alternate outline icon" style="font-style: inherit!important;"></i>
+                                                        <!-- <img style="cursor: pointer;" class="ui image logo" width="30" height="30" src="./assets/images/calendar.png"> -->
+                                                        <input suiDatepicker class="input100" style="width: 100%;cursor: pointer;" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek"
+                                                            [pickerUseNativeOnMobile]="false" formControlName="transactionDate"
+                                                            placeholder="Choose Date of Transaction">
+                                                    </div>
+                                                    <nti-field-error-display [displayError]="isFieldValid('transactionDate')" errorMsg="Choose transaction date">
+                                                    </nti-field-error-display>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="container-login100-form-btn">
+                                            <button style="width: 100%" class="login100-form-btn" (click)="submit()">
+                                                Submit Details
+                                            </button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+            </div>
+
+        </section>
+        <!--Footer -->
+        <section id="one" style="background-color: #111111;
+ color: rgba(255, 255, 255, 0.5) !important;
+ padding: 3rem 0 6rem 0;">
+            <div class="inner" style="max-width: 100%!important;">
+                <!-- Three -->
+                <section id="three" style="max-width: 100%!important;padding:0px">
+                    <div class="inner" style="max-width: 100%!important;">
+                        <article>
+                            <div class="content">
+                                <header style="text-align:center">
+                                    <h3>Tanker Accident Relief Support</h3>
+                                </header>
+                                <p>We are a group that wants to bring back the lost hope of the tanker accident victims. We
+                                    solicit for funds to help those affected in a sincere and Godly way.
+                                </p>
+                                <p>
+                                    God bless you as you donate to help.
+                                </p>
+                            </div>
+                        </article>
+                        <article>
+                            <div class="content">
+
+                                <header style="text-align:center">
+                                    <h4>Our Links</h4>
+                                </header>
+                                <ul class="alt">
+                                    <li>
+                                        <a href="#">About Us.</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Contact Us.</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">News & Media.</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </article>
+                        <article>
+                            <div class="content">
+                                <header style="text-align:center">
+                                    <h4>Social Media</h4>
+                                </header>
+                                <ul class="plain">
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon fa-twitter">&nbsp;</i>Twitter</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon fa-facebook">&nbsp;</i>Facebook</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon fa-instagram">&nbsp;</i>Instagram</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon fa-github">&nbsp;</i>Github</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <div class="copyright" style="text-align: center">
+                    ©JKK Oneware Limited - Tanker accident relief support.
+                </div>
+            </div>
+        </section>
+
+
+    </sui-sidebar-sibling>
+
+</sui-sidebar-container>

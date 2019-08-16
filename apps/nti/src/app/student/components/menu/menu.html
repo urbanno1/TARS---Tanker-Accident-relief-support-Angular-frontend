@@ -1,0 +1,106 @@
+<div id="menu" class="ui  attached vertical basic segment">
+    <!-- Menu -->
+    <div class="ui  container">
+        <div id="mobile" class="bpp-menu-button mobile only ">
+            <div class="ui big header">
+                <i class=" sidebar icon"></i>
+                NTI
+            </div>
+            <i class="big user circle icon"></i>
+            <!-- <img class="ui  circular avatar image" src="/assets/avatar/1.jpg" (click)="show()"> -->
+        </div>
+
+        <div id="desktop" class="ui secondary menu computer only">
+            <div class="header item bpp-logo" style="font-size: xx-large" [routerLink]="['admin']">
+                NTI
+            </div>
+            <a class="item" [routerLink]="['admin']">Home</a>
+            <div class="right menu">
+                <div id="submenudrop" class="ui pointing top right dropdown item" suiDropdown>
+                    <a class="msg">
+                        <i style="color: gray" class="bell icon"></i>
+                        <div class="floating ui red label mini circular"> 1</div>
+                    </a>
+                    <div class="menu transition visible" suiDropdownMenu>
+                        <div class="ui grid  basic fill  attached segment no-padding">
+                            <div id="complaints" class="ui divided selection list" style="max-width: 500px;width: 500px;text-align: center" *ngIf="unRead && unRead.length > 0">
+
+                                <div class="ui grid" *ngFor="let notification of unRead" style="margin-bottom:0px;margin-top:0px;border-bottom: 1px solid #d0cbcb!important;"
+                                    [style.background]="notification.read == false ? '#dff0ff' : 'white'">
+                                    <div class="one wide column">
+                                        <span>
+                                            <i class="large envelope outline icon" style="margin-left: 15px;margin-top: 10px"></i>
+                                        </span>
+                                    </div>
+                                    <div class="ten wide column">
+                                        <div class="ui message" style="float: left; padding: 0.2em 0.5em!important; background:none!important; -webkit-box-shadow:none!important; box-shadow:none!important ">
+                                            <div class="header" style="font-size: 12px;text-align: left">
+                                                <a class="item" routerLink="./notifications">
+                                                    {{notification?.subject }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="five wide column">
+                                        <span style="float: left;">
+                                            <a style="margin-top: 10px;" class="ui tiny basic label">{{notification?.dateCreated}}</a>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="item " style="text-align: center">
+                                    <a [routerLink]="['/']">
+                                        See All
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="ui divided selection list" *ngIf="!optionPopulated">
+                                <div class="content " style="width: 450px;text-align: center">
+                                    <h3 style="padding:15%;">
+                                        <i class="big bell icon" style="color: darkgray"></i>
+                                        <br> No new notifications
+                                    </h3>
+                                </div>
+                                <div class="ui divider" style="margin: 0px" *ngIf="total > 0"></div>
+                                <div style="text-align: center" *ngIf="total > 0">
+                                    <a class="item " [routerLink]="['./notifications']">
+                                        See All
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="submenudrop" class="ui pointing top right dropdown item" suiDropdown>
+                    <!-- <img class="ui  circular avatar image" src="/assets/avatar/1.jpg"> -->
+                    <i class="big user circle icon"></i>
+                    <div class="menu transition visible" suiDropdownMenu>
+                        <a class="item" [routerLink]="['/admin/account']"> Change Password</a>
+                        <div class="divider"></div>
+                        <div class="item" (click)="logout()">Logout</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="ui  container">
+        <div id="desktop" class="ui secondary menu computer only">
+            <!-- <bpp-breadcrumb style="margin-left:12px"></bpp-breadcrumb> -->
+            <span style="margin-left: 1%">
+                Admin -> Dashboard
+            </span>
+            <div class="right menu" style="margin-right:45px">
+                <span style="text-transform:uppercase; padding-right:10px" *ngIf="fullName">{{fullName}}</span>
+                <strong style="text-transform:uppercase; padding-left:10px">
+                    <span *ngIf="role">
+                        {{role}}
+                    </span>
+                </strong>
+            </div>
+        </div>
+    </div>

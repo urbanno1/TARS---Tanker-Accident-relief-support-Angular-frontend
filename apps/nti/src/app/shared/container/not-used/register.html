@@ -1,0 +1,92 @@
+<div class="ui grid three column " style="margin-top:30px;">
+    <div class="ui column">
+    </div>
+    <div class="ui column">
+        <img [routerLink]="['']" style="cursor: pointer;margin-left: 21%" class="ui image logo" width="120" height="80" src="./assets/nti-logo2.jpg">
+    </div>
+    <div class="ui column">
+    </div>
+</div>
+<div style="min-width: 200px; margin-top:30px;">
+    <div class="ui  header top attached segment " style="height: 70px;text-align: center;color:white;background: #008001; min-width: 100%; margin-left: 0%!important;  margin-right: 0%!important;">
+        USER REGISTERATION
+    </div>
+    <div class="ui attached basic fill segment no-padding" style="min-width: 100%;border: none">
+
+        <div class="ui negative icon message" *ngIf="error">
+            <i class="big info circle icon"></i>
+            <div class="content">
+                <p>{{error}}.</p>
+            </div>
+        </div>
+
+        <div class="ui positive icon message" *ngIf="success">
+            <i class="big info circle icon"></i>
+            <div class="content">
+                <p>Registeration was successfully, login to access your dashboard</p>
+            </div>
+        </div>
+
+        <div style="padding: 10px" class="ui form" [formGroup]="registerForm" [ngClass]="{'loading':pending}">
+            <div class="ui stackable grid  two column">
+                <div class="eight wide column">
+                    <div class="field required" [ngClass]="displayFieldCss('matriculationNumber')">
+                        <label>Matriculation Number</label>
+                        <input type="text" formControlName="matriculationNumber" placeholder="Enter your matriculation number" required>
+                        <nti-field-error-display   [displayError]="isFieldValid('matriculationNumber')"
+                            errorMsg="Matriculation number must contain alphabet and numbers and must be 10 characters">
+                        </nti-field-error-display>
+                    </div>
+
+                    <div class="field required" [ngClass]="displayFieldCss('lastName')">
+                        <label>Last Name </label>
+                        <input type="text" formControlName="lastName" placeholder="Enter your last name" required>
+                        <nti-field-error-display   [displayError]="isFieldValid('lastName')" errorMsg="Enter your last name">
+                        </nti-field-error-display>
+                    </div>
+
+                    <div class="field required" [ngClass]="displayFieldCss('email')">
+                        <label>Email Address </label>
+                        <input type="text" formControlName="email" placeholder="Enter your email address" required>
+                        <nti-field-error-display  [displayError]="isFieldValid('email')" errorMsg="Enter a valid email address">
+                        </nti-field-error-display>
+                    </div>
+                </div>
+
+                <div class="eight wide column">
+                    <div class="field required" [ngClass]="displayFieldCss('password')">
+                        <label>Password</label>
+                        <input type="password" formControlName="password" placeholder="Enter password" required>
+                        <nti-field-error-display  [displayError]="isFieldValid('password')" errorMsg="Password must be more than 6 characters">
+                        </nti-field-error-display>
+                    </div>
+
+                    <div class="field required" [ngClass]="displayFieldCss('firstName')">
+                        <label>First Name</label>
+                        <input type="text" formControlName="firstName" placeholder="Enter your first name" required>
+                        <nti-field-error-display   [displayError]="isFieldValid('firstName')" errorMsg="Enter your first name"
+                            required>
+                        </nti-field-error-display>
+
+                    </div>
+
+                    <div class="field required" [ngClass]="displayFieldCss('phoneNumber')">
+                        <label>Phone Number</label>
+                        <input type="number" formControlName="phoneNumber" placeholder="Enter your phone number" required minlength="8">
+
+                        <nti-field-error-display   [displayError]="isFieldValid('phoneNumber')" errorMsg="Enter a valid phone number">
+                        </nti-field-error-display>
+                    </div>
+                </div>
+            </div>
+
+            <div class="twelve wide column" style="margin-top:25px;margin-bottom:25px">
+                <div class="field">
+                    <button [disabled]="!registerForm.valid" style="color:white; min-width:100%; background: #008001" class="ui button middle floated"
+                        type="submit" (click)="submit()">SUBMIT</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
